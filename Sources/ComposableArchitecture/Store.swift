@@ -1057,9 +1057,9 @@ extension ScopedStoreReducer: AnyScopedStoreReducer {
       ? {
         callCount.withValue { $0 += 1 }
         let result = store._isInvalidated() || isInvalid?(store.stateSubject.value) == true
-        if callCount.value % 100000 == 0 {
-          print("Name: \(storeTypeName(of: store)), Is invalidated: \(result), State: \(store.stateSubject.value), Call Count: \(callCount.value)")
-        }
+        // if callCount.value % 100000 == 0 {
+        print("Name: \(storeTypeName(of: store)), Is invalidated: \(result), State: \(store.stateSubject.value), Call Count: \(callCount.value)")
+        // }
         return result
       }
       : { [weak store] in
