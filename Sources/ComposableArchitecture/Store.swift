@@ -1034,6 +1034,8 @@ private protocol AnyScopedStoreReducer {
   ) -> Store<ChildState, ChildAction>
 }
 
+let callCount = LockIsolated(0)
+
 extension ScopedStoreReducer: AnyScopedStoreReducer {
   func scope<S, A, ChildState, ChildAction>(
     store: Store<S, A>,
@@ -1053,9 +1055,9 @@ extension ScopedStoreReducer: AnyScopedStoreReducer {
     let isInvalid =
       id == nil || !store.canCacheChildren
       ? {
-        print(store.stateSubject.value)
+        callCount.withValue { $0 += 1 }
         let result = store._isInvalidated() || isInvalid?(store.stateSubject.value) == true
-        print("Is invalidated: \(result), State: \(store.stateSubject.value)")
+        print("Name: \(storeTypeName(of: store)), Is invalidated: \(result), State: \(store.stateSubject.value), Call Count: \(callCount.value)")
         return store._isInvalidated() || isInvalid?(store.stateSubject.value) == true
       }
       : { [weak store] in
