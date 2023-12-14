@@ -1088,6 +1088,7 @@ extension ScopedStoreReducer: AnyScopedStoreReducer {
         }
         if childStore._isInvalidated(), let id = id {
           store.invalidateChild(id: id)
+          childStore.parentCancellable = nil
           guard ChildState.self is _OptionalProtocol.Type
           else {
             return
