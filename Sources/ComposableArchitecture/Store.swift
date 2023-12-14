@@ -482,6 +482,7 @@ public final class Store<State, Action> {
   }
 
   fileprivate func invalidate() {
+    self._isInvalidated = { true }
     for id in self.children.keys {
       self.invalidateChild(id: id)
     }
