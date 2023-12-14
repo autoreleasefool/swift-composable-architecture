@@ -1053,7 +1053,10 @@ extension ScopedStoreReducer: AnyScopedStoreReducer {
     let isInvalid =
       id == nil || !store.canCacheChildren
       ? {
-        store._isInvalidated() || isInvalid?(store.stateSubject.value) == true
+        print(store.stateSubject.value)
+        let result = store._isInvalidated() || isInvalid?(store.stateSubject.value) == true
+        print("Is invalidated: \(result), State: \(store.stateSubject.value)")
+        return store._isInvalidated() || isInvalid?(store.stateSubject.value) == true
       }
       : { [weak store] in
         guard let store = store else { return true }
